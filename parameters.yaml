@@ -1,0 +1,123 @@
+ROSTemplateFormatVersion: '2015-09-01'
+# 定义参数
+Parameters:
+  Parameters:
+    Type: Json
+    AssociationProperty: List[Parameters]
+    AssociationPropertyMetadata:
+      Parameters:
+        Name:
+          Type: String
+        Label:
+          Type: String
+        Type:
+          Type: String
+          AllowedValues:
+            - Integer
+            - String
+            - Boolean
+            - Json
+        AllowedValues:
+          Type: Json
+          AssociationProperty: List
+          AssociationPropertyMetadata:
+            Multiple: true
+          Default: Null
+          Required: false
+        NoEcho:
+          Type: Boolean
+          AllowedValues:
+            - true
+            - false
+        AssociationProperty:
+          Type: String
+          AssociationProperty: AssociationProperty
+    Default:
+    - Name: AdminPassword
+      NoEcho: true
+      Type: String
+      Label: 管理员密码
+      AssociationProperty: ALIYUN::ECS::Instance::Password
+  Command:
+    Type: String
+    AssociationProperty: Code
+    Default: |
+      #!/bin/bash
+      echo ${AdminPassword}
+  EcsImageArtifactId:
+    Type: String
+    Label:
+      en: ecs image artifact
+      zh-cn: EcsImage部署物
+    AssociationProperty: ALIYUN::ComputeNest::Artifact::ArtifactId
+    AssociationPropertyMetadata:
+      IsSupplier: true
+      ArtifactType: EcsImage
+  EcsImageArtifactVersion:
+    Type: String
+    Label:
+      en: ecs image artifact version
+      zh-cn: EcsImage部署物版本
+    AssociationProperty: ALIYUN::ComputeNest::Artifact::ArtifactIdVersion
+    AssociationPropertyMetadata:
+      IsSupplier: true
+      ArtifactId: ${EcsImageArtifactId}
+  Ports:
+    Type: Json
+    Label:
+      en: security group ports
+      zh-cn: 安全组开放端口
+    AssociationProperty: List
+    AssociationPropertyMetadata:
+      Multiple: true
+    Default:
+      - 8080
+    Required: true
+    MinLength: 1
+  InstanceTypes:
+    Type: Json
+    Label:
+      en: Ecs InstanceTypes
+      zh-cn: Ecs实例规格列表
+    AssociationProperty: ALIYUN::ECS::Instance::InstanceType
+    AssociationPropertyMetadata:
+      Multiple: true
+    Default:
+      - ecs.c6.large
+      - ecs.c6.xlarge
+      - ecs.c6.2xlarge
+  Outputs:
+    Type: Json
+    AssociationProperty: List[Parameters]
+    AssociationPropertyMetadata:
+      Parameters:
+        DisplayName:
+          Type: String
+        Expression:
+          Type: String
+    Default:
+    - DisplayName: Endpoint
+      Expression: https://${Address}:8080
+Metadata:
+  ALIYUN::ROS::Interface:
+    # 定义资源分组，创建服务实例时，同一分组的参数分布在一起
+    ParameterGroups:
+      - Parameters:
+          - EcsImageArtifactId
+          - EcsImageArtifactVersion
+          - Parameters
+          - Command
+        Label:
+          en: Deployment Configuration
+          zh-cn: 软件配置
+      - Parameters:
+          - InstanceTypes
+          - Ports
+        Label:
+          en: Security Configuration
+          zh-cn: 实例配置
+      - Parameters:
+          - Outputs
+        Label:
+          en: Deployment Configuration
+          zh-cn: 输出配置

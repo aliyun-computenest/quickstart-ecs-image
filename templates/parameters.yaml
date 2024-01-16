@@ -1,0 +1,20 @@
+EcsImageArtifactId: artifact-xxx
+EcsImageArtifactVersion: draft
+Parameters:
+  - Name: AdminPassword
+    NoEcho: true
+    Type: String
+    Label: 管理员密码
+    AssociationProperty: ALIYUN::ECS::Instance::Password
+Command: |
+    #!/bin/bash
+    echo ${AdminPassword}
+InstanceTypes:
+  - ecs.c6.large
+  - ecs.c6.xlarge
+  - ecs.c6.2xlarge
+Ports:
+  - 8080
+Outputs:
+  - DisplayName: Endpoint
+    Expression: https://${Address}:8080
