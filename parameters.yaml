@@ -97,7 +97,7 @@ Parameters:
           Type: String
     Default:
     - DisplayName: Endpoint
-      Expression: https://${Address}:8080
+      Expression: http://${Address}:8080
 Metadata:
   ALIYUN::ROS::Interface:
     # 定义资源分组，创建服务实例时，同一分组的参数分布在一起
