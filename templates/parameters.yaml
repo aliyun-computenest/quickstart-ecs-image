@@ -16,5 +16,5 @@ InstanceTypes:
 Ports:
   - 8080
 Outputs:
-  - DisplayName: Endpoint
+  - Label: Endpoint
     Expression: https://${Address}:8080

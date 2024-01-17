@@ -176,13 +176,14 @@ InstanceGroup:
       Sync: true
       Timeout: 3600
       CommandContent:
-                #!/bin/bash
-echo ${AdminPassword}
+        #!/bin/bash
+        echo 
+        
 Outputs:
-  :
+  Endpoint:
     Value:
       Fn::Sub:
-        - https://${Address}:8080
+        - https://:8080
         - Address:
             Fn::Select:
             - 0
