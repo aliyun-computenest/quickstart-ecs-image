@@ -47,8 +47,8 @@ Parameters:
   EcsImageArtifactId:
     Type: String
     Label:
-      en: ecs image artifact
-      zh-cn: EcsImage部署物
+      en: artifact id
+      zh-cn: 部署物Id
     AssociationProperty: ALIYUN::ComputeNest::Artifact::ArtifactId
     AssociationPropertyMetadata:
       IsSupplier: true
@@ -56,8 +56,8 @@ Parameters:
   EcsImageArtifactVersion:
     Type: String
     Label:
-      en: ecs image artifact version
-      zh-cn: EcsImage部署物版本
+      en: artifact version
+      zh-cn: 部署物版本
     AssociationProperty: ALIYUN::ComputeNest::Artifact::ArtifactIdVersion
     AssociationPropertyMetadata:
       IsSupplier: true
@@ -103,8 +103,10 @@ Metadata:
     # 定义资源分组，创建服务实例时，同一分组的参数分布在一起
     ParameterGroups:
       - Parameters:
-          - EcsImageArtifactId
-          - EcsImageArtifactVersion
+          - Label: Ecs镜像部署物
+            Items:
+              - EcsImageArtifactId
+              - EcsImageArtifactVersion
           - Parameters
           - Command
         Label:
