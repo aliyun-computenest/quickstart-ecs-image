@@ -26,11 +26,14 @@ Parameters:
           Required: false
         NoEcho:
           Type: Boolean
+          Default: false
           AllowedValues:
             - true
             - false
         AssociationProperty:
           Type: String
+          Default: Null
+          Required: false
           AssociationProperty: AssociationProperty
     Default:
     - Name: AdminPassword
