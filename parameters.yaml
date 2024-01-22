@@ -94,12 +94,12 @@ Parameters:
     AssociationProperty: List[Parameters]
     AssociationPropertyMetadata:
       Parameters:
-        DisplayName:
+        Label:
           Type: String
         Expression:
           Type: String
     Default:
-    - DisplayName: Endpoint
+    - Label: Endpoint
       Expression: http://${Address}:8080
 Metadata:
   ALIYUN::ROS::Interface:
