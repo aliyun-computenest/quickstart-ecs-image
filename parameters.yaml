@@ -47,6 +47,9 @@ Parameters:
     Default: |
       #!/bin/bash
       echo ${AdminPassword}
+  CommandTimeout:
+    Type: Number
+    Default: 300
   EcsImageArtifactId:
     Type: String
     Label:
@@ -112,6 +115,7 @@ Metadata:
               - EcsImageArtifactVersion
           - Parameters
           - Command
+          - CommandTimeout
         Label:
           en: Deployment Configuration
           zh-cn: 软件配置

@@ -6,6 +6,7 @@ Parameters:
     Type: String
     Label: 管理员密码
     AssociationProperty: ALIYUN::ECS::Instance::Password
+CommandTimeout: 300
 Command: |
     #!/bin/bash
     echo ${AdminPassword}

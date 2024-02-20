@@ -66,11 +66,10 @@ Parameters:
       InstanceChargeType: ${PayType}
     AllowedValues:
       - ecs.c6.large
-
       - ecs.c6.xlarge
-
       - ecs.c6.2xlarge
-InstancePassword:
+    
+  InstancePassword:
     NoEcho: true
     Type: String
     Description:
@@ -115,12 +114,13 @@ InstancePassword:
       zh-cn: 现有业务网络交换机的实例ID
     Default: ''
     AssociationProperty: 'ALIYUN::ECS::VSwitch::VSwitchId'
+    AssociationPropertyMetadata:
+      VpcId: VpcId
+      ZoneId: ZoneId
   AdminPassword:
     Type: String
     AssociationProperty: ALIYUN::ECS::Instance::Password
-
     Label: 管理员密码
-
     NoEcho: True
 Resources:
   SecurityGroup:
@@ -130,14 +130,13 @@ Resources:
         Ref: ALIYUN::StackName
       VpcId:
         Ref: VpcId
-      # 安全组入端口
       SecurityGroupIngress:
         - PortRange: 8080/8080
           Priority: 1
           SourceCidrIp: 0.0.0.0/0
           IpProtocol: tcp
           NicType: internet
-InstanceGroup:
+  InstanceGroup:
     Type: ALIYUN::ECS::InstanceGroup
     Properties:
       # 付费类型
@@ -165,6 +164,15 @@ InstanceGroup:
       InternetMaxBandwidthOut: 5
       IoOptimized: optimized
       MaxAmount: 1
+  WaitCondition:
+    Type: ALIYUN::ROS::WaitCondition
+    Properties:
+      Count: 1
+      Handle:
+        Ref: WaitConditionHandle
+      Timeout: 300
+  WaitConditionHandle:
+    Type: ALIYUN::ROS::WaitConditionHandle
   InstallPackage:
     Type: ALIYUN::ECS::RunCommand
     Properties:
@@ -174,16 +182,24 @@ InstanceGroup:
           - InstanceIds
       Type: RunShellScript
       Sync: true
-      Timeout: 3600
+      Timeout: 300
       CommandContent:
-        #!/bin/bash
-        echo 
-        
-Outputs:
-  Endpoint:
+        Fn::Sub:
+          - |
+            #!/bin/bash
+            echo ${AdminPassword}
+            
+            # 执行成功回调WaitCondition结束waitCondition的等待
+            ${CurlCli} -d "{\"Data\" : \"Success\", \"status\" : \"SUCCESS\"}"
+          - CurlCli:
+              Fn::GetAtt:
+                - WaitConditionHandle
+                - CurlCli
+Outputs: 
+  :
     Value:
       Fn::Sub:
-        - https://:8080
+        - https://${Address}:8080
         - Address:
             Fn::Select:
             - 0
@@ -204,6 +220,13 @@ Metadata:
           - InstancePassword
         Label:
           default: 资源配置
+      
+      - Parameters:
+          - AdminPassword
+        Label:
+          en: Software Configuration
+          zh-cn: 软件配置
+      
       - Parameters:
           - ZoneId
           - VpcId
