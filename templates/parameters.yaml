@@ -1,3 +1,5 @@
+AllowedRegions:
+  - cn-hangzhou
 EcsImageArtifactId: artifact-xxx
 EcsImageArtifactVersion: draft
 Parameters:

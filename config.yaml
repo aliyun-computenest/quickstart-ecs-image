@@ -10,7 +10,9 @@ Service:
     TemplateConfigs:
       - Name: ECS单机版
         Url: 'templates/template.yaml'
-        AllowedRegions: []
+        AllowedRegions:
+          - cn-hangzhou
+        
   ServiceType: private
   ServiceInfo:
     Locale: zh-CN

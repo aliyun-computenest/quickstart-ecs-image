@@ -10,7 +10,11 @@ Service:
     TemplateConfigs:
       - Name: ECS单机版
         Url: 'templates/template.yaml'
-        AllowedRegions: []
+        {%- if AllowedRegions %}
+        AllowedRegions:{% for AllowedRegion in AllowedRegions %}
+          - {{ AllowedRegion }}
+          {%- endfor %}
+        {% endif %}
   ServiceType: private
   ServiceInfo:
     Locale: zh-CN
