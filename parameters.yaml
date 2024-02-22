@@ -2,6 +2,12 @@ ROSTemplateFormatVersion: '2015-09-01'
 # 定义参数
 Parameters:
   Parameters:
+    Label:
+      en: Customized service parameters
+      zh-cn: 自定义服务参数
+    Description:
+      en: Customized service parameters, can be referenced in command content
+      zh-cn: 自定义的服务参数，可以在命令中引用参数
     Type: Json
     AssociationProperty: List[Parameters]
     AssociationPropertyMetadata:
@@ -42,19 +48,28 @@ Parameters:
       Label: 管理员密码
       AssociationProperty: ALIYUN::ECS::Instance::Password
   Command:
+    Label:
+      en: Initialization command
+      zh-cn: 初始化命令
+    Description:
+      en: Initialize your software in command
+      zh-cn: 在命令中对软件进行初始化
     Type: String
     AssociationProperty: Code
     Default: |
       #!/bin/bash
       echo ${AdminPassword}
   CommandTimeout:
+    Label:
+      en: Timeout of command in seconds
+      zh-cn: 命令超时时间（秒）
     Type: Number
     Default: 300
   EcsImageArtifactId:
     Type: String
     Label:
-      en: artifact id
-      zh-cn: 部署物Id
+      en: ECS image artifact id
+      zh-cn: ECS镜像部署物Id
     AssociationProperty: ALIYUN::ComputeNest::Artifact::ArtifactId
     AssociationPropertyMetadata:
       IsSupplier: true
@@ -62,8 +77,8 @@ Parameters:
   EcsImageArtifactVersion:
     Type: String
     Label:
-      en: artifact version
-      zh-cn: 部署物版本
+      en: ECS image artifact version
+      zh-cn: ECS镜像部署物版本
     AssociationProperty: ALIYUN::ComputeNest::Artifact::ArtifactIdVersion
     AssociationPropertyMetadata:
       IsSupplier: true
@@ -83,8 +98,11 @@ Parameters:
   InstanceTypes:
     Type: Json
     Label:
-      en: Ecs InstanceTypes
-      zh-cn: Ecs实例规格列表
+      en: ECS instance types
+      zh-cn: ECS实例规格列表
+    Description:
+      en: ECS instance types that user can choose
+      zh-cn: 用户可选的ECS实例规格范围
     AssociationProperty: ALIYUN::ECS::Instance::InstanceType
     AssociationPropertyMetadata:
       Multiple: true
@@ -93,6 +111,12 @@ Parameters:
       - ecs.c6.xlarge
       - ecs.c6.2xlarge
   Outputs:
+    Label:
+      en: Service outputs
+      zh-cn: 服务输出
+    Description:
+      en: Service outputs
+      zh-cn: 服务输出，可以引用参数或Address，Address代表公网IP
     Type: Json
     AssociationProperty: List[Parameters]
     AssociationPropertyMetadata:

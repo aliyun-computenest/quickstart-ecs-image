@@ -1,24 +1,55 @@
-# Demo服务实例部署文档
+# 服务模版说明文档
 
-## 概述
+## 服务模板说明
 
-`(服务概述内容)`。
+本文介绍基于ECS镜像的单机ECS服务模板，本示例对应的[git地址](https://github.com/aliyun-computenest/quickstart-ecs-image)
 
-```
-eg：
+本示例会自动地构建计算巢服务，具体的服务构建流程为
+1. 服务商需要提前创建好镜像部署物，参考[官网文档](https://help.aliyun.com/zh/compute-nest/create-a-deployment-object)
+2. 选择此服务模板创建计算巢服务，关联镜像部署物，定制服务入参和输出
+3. 提交后自动创建服务，创建过程大约持续2分钟，当服务变成待预发布后构建成功
 
-Demo服务是计算巢提供的示例。
-本文向您介绍如何开通计算巢上的`Demo`服务，以及部署流程和使用说明。
-```
+### 服务模板支持的配置
+从此服务模板创建服务，支持服务商指定以下信息
 
-## 计费说明
+|配置组| 配置项                          | 说明                     |
+|---------|---------------------------------|------------------------|
+|服务信息| 服务图标             |        |
+|服务信息| 服务名称             |        |
+|服务信息| 服务简介             |        |
+|服务信息| 版本描述             | 初始版本的版本描述       |
+|软件配置| ECS镜像部署物             |ECS镜像部署物的ID和版本，ECS镜像可以包含服务商软件以及运行环境         |
+|软件配置| 自定义服务参数             |服务商自定义的入参，可以在命令和输出中引用         |
+|软件配置| 初始化命令             | 通过初始化命令可以对软件进行初始化，也可以执行其他需要的操作        |
+|软件配置| 命令超时时间             |命令执行超时后服务实例部署失败         |
+|实例配置| ECS实例规格列表             |用户可选的ECS实例规格范围        |
+|实例配置| 安全组开放端口             |安全组开放的的入方向端口列表        |
+|输出配置| 服务输出 | 服务的输出配置，服务实例部署成功后用户可以在服务实例详情中看到输出信息 |
 
-`(计费说明内容)`
 
-```
-eg:
+## 部署架构
 
-Demo在计算巢上的费用主要涉及：
+部署架构为单机ecs部署，通过公网ip 8080端口访问
+<img src="architecture.png" width="1500" height="700" align="bottom"/>
+
+## 服务构建计费说明
+通过此服务模板构建服务不产生费用
+
+## RAM账号所需权限
+
+本服务需要对ECS、VPC等资源进行访问和创建操作，若您使用RAM用户创建服务实例，需要在创建服务实例前，对使用的RAM用户的账号添加相应资源的权限。添加RAM权限的详细操作，请参见[为RAM用户授权](https://help.aliyun.com/document_detail/121945.html)。所需权限如下表所示。
+
+| 权限策略名称                          | 备注                     |
+|---------------------------------|------------------------|
+| AliyunECSFullAccess             | 管理云服务器服务（ECS）的权限       |
+| AliyunVPCFullAccess             | 管理专有网络（VPC）的权限         |
+| AliyunROSFullAccess             | 管理资源编排服务（ROS）的权限       |
+| AliyunComputeNestUserFullAccess | 管理计算巢服务（ComputeNest）的用户侧权限 |
+| AliyunComputeNestSupplierFullAccess | 管理计算巢服务（ComputeNest）的服务商侧权限 ｜
+
+## 服务实例计费说明
+
+测试本服务在计算巢上的费用主要涉及：
 
 - 所选vCPU与内存规格
 - 系统盘类型及容量
@@ -29,103 +60,229 @@ Demo在计算巢上的费用主要涉及：
 - 按量付费（小时）
 - 包年包月
 
-目前提供如下实例：
-
-| 规格族 | vCPU与内存 | 系统盘 | 公网带宽 |
-| --- | --- | --- | --- |
-| ecs.r6.xlarge | 内存型r6，4vCPU 32GiB | ESSD云盘 200GiB PL0 | 固定带宽1Mbps |
+服务支持的ECS实例规格由服务商在创建服务时配置。
 
 预估费用在创建实例时可实时看到。
-如需更多规格、其他服务（如集群高可用性要求、企业级支持服务等），请联系我们 [mailto:xx@xx.com](mailto:xx@xx.com)。
 
-```
-
-## 部署架构
-
-`(部署概述内容)`
-
-## RAM账号所需权限
-
-`(权限策略内容)`
-
-```
-eg: 
-
-Demo服务需要对ECS、VPC等资源进行访问和创建操作，若您使用RAM用户创建服务实例，需要在创建服务实例前，对使用的RAM用户的账号添加相应资源的权限。添加RAM权限的详细操作，请参见[为RAM用户授权](https://help.aliyun.com/document_detail/121945.html)。所需权限如下表所示。
-
-
-| 权限策略名称 | 备注 |
-| --- | --- |
-| AliyunECSFullAccess | 管理云服务器服务（ECS）的权限 |
-
-```
 
 ## 部署流程
 
-### 部署步骤
-
-`(部署步骤内容)`
-
-```
-eg:
-
-1. 单击部署链接，进入服务实例部署界面，根据界面提示，填写参数完成部署。
-2. 补充示意图。
-```
 ### 部署参数说明
+用户可见的部署参数，由服务模板中的固定参数和服务商自定义的服务参数组成。
 
-`(部署参数说明内容)`
-
-```
-eg:
-
-您在创建服务实例的过程中，需要配置服务实例信息。下文介绍云XR实时渲染平台服务实例输入参数的详细信息。
-
-| 参数组 | 参数项 | 示例 | 说明 |
-| --- | --- | --- | --- |
-| 服务实例名称 |  | test | 实例的名称 |
-| 地域 |  | 华北2（北京） | 选中服务实例的地域，建议就近选中，以获取更好的网络延时。 |
-```
-
-### 验证结果
-
-`(验证结果内容)`
+其中，服务模板中的固定参数定义在common/templates/ecs-deploy.yaml.j2中，包括付费类型、ECS实例类型及VPC网络等参数
 
 ```
-eg:
+  PayType:
+    Type: String
+    Label:
+      en: ECS Instance Charge Type
+      zh-cn: 付费类型
+    Default: PostPaid
+    AllowedValues:
+      - PostPaid
+      - PrePaid
+    AssociationProperty: ChargeType
+    AssociationPropertyMetadata:
+      LocaleKey: InstanceChargeType
+  PayPeriodUnit:
+    Type: String
+    Label:
+      en: Pay Period Unit
+      zh-cn: 购买资源时长周期
+    Default: Month
+    AllowedValues:
+      - Month
+      - Year
+    AssociationProperty: PayPeriodUnit
+    AssociationPropertyMetadata:
+      Visible:
+        Condition:
+          Fn::Not:
+            Fn::Equals:
+              - ${PayType}
+              - PostPaid
+  PayPeriod:
+    Type: Number
+    Label:
+      en: Period
+      zh-cn: 购买资源时长
+    Default: 1
+    AllowedValues:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+    AssociationProperty: PayPeriod
+    AssociationPropertyMetadata:
+      Visible:
+        Condition:
+          Fn::Not:
+            Fn::Equals:
+              - ${PayType}
+              - PostPaid
+  EcsInstanceType:
+    Type: String
+    Label:
+      en: Instance Type
+      zh-cn: 实例类型
+    AssociationProperty: ALIYUN::ECS::Instance::InstanceType
+    AssociationPropertyMetadata:
+      InstanceChargeType: ${PayType}
+    {%- if InstanceTypes %}
+    AllowedValues:{% for InstanceType in InstanceTypes %}
+      - {{ InstanceType }}
+      {%- endfor %}
+    {% endif %}
+  InstancePassword:
+    NoEcho: true
+    Type: String
+    Description:
+      en: Server login password, Length 8-30, must contain three(Capital letters, lowercase letters, numbers, ()`~!@#$%^&*_-+=|{}[]:;'<>,.?/ Special symbol in)
+      zh-cn: 服务器登录密码,长度8-30，必须包含三项（大写字母、小写字母、数字、 ()`~!@#$%^&*_-+=|{}[]:;'<>,.?/ 中的特殊符号）
+    AllowedPattern: '^[a-zA-Z0-9-\(\)\`\~\!\@\#\$\%\^\&\*\_\-\+\=\|\{\}\[\]\:\;\<\>\,\.\?\/]*$'
+    Label:
+      en: Instance Password
+      zh-cn: 实例密码
+    ConstraintDescription:
+      en: Length 8-30, must contain three(Capital letters, lowercase letters, numbers, ()`~!@#$%^&*_-+=|{}[]:;'<>,.?/ Special symbol in)
+      zh-cn: 长度8-30，必须包含三项（大写字母、小写字母、数字、 ()`~!@#$%^&*_-+=|{}[]:;'<>,.?/ 中的特殊符号）
+    MinLength: 8
+    MaxLength: 30
+    AssociationProperty: ALIYUN::ECS::Instance::Password
+  ZoneId:
+    Type: String
+    Label:
+      en: Zone ID
+      zh-cn: 可用区ID
+    AssociationProperty: ALIYUN::ECS::Instance::ZoneId
+  VpcId:
+    Type: String
+    Label:
+      en: VPC ID
+      zh-cn: 专有网络VPC实例ID
+    Description:
+      en: >-
+        Please search the ID starting with (vpc-xxx) from console-Virtual
+        Private Cloud
+      zh-cn: 现有虚拟专有网络的实例ID
+    AssociationProperty: 'ALIYUN::ECS::VPC::VPCId'
+  VSwitchId:
+    Type: String
+    Label:
+      en: VSwitch ID
+      zh-cn: 交换机实例ID
+    Description:
+      en: >-
+        Instance ID of existing business network switches, console-Virtual
+        Private Cloud-VSwitches under query
+      zh-cn: 现有业务网络交换机的实例ID
+    Default: ''
+    AssociationProperty: 'ALIYUN::ECS::VSwitch::VSwitchId'
+    AssociationPropertyMetadata:
+      VpcId: VpcId
+      ZoneId: ZoneId
+```
+### 部署资源说明
+服务模板部署的资源定义在common/templates/ecs-deploy.yaml.j2中，包括安全组和ECS实例资源
 
-1. 查看服务实例。服务实例创建成功后，部署时间大约需要2分钟。部署完成后，页面上可以看到对应的服务实例。 
-2. 通过服务实例访问TuGraph。进入到对应的服务实例后，可以在页面上获取到web、rpc、ssh共3种使用方式。
+```
+  SecurityGroup:
+    Type: ALIYUN::ECS::SecurityGroup
+    Properties:
+      SecurityGroupName:
+        Ref: ALIYUN::StackName
+      VpcId:
+        Ref: VpcId
+      SecurityGroupIngress: {%- for Port in Ports %}
+        - PortRange: {{ Port }}/{{ Port }}
+          Priority: 1
+          SourceCidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          NicType: internet
+      {%- endfor %}
+  InstanceGroup:
+    Type: ALIYUN::ECS::InstanceGroup
+    Properties:
+      # 付费类型
+      InstanceChargeType:
+        Ref: PayType
+      PeriodUnit:
+        Ref: PayPeriodUnit
+      Period:
+        Ref: PayPeriod
+      VpcId:
+        Ref: VpcId
+      VSwitchId:
+        Ref: VSwitchId
+      SecurityGroupId:
+        Ref: SecurityGroup
+      ZoneId:
+        Ref: ZoneId
+      ImageId: centos_7_8_x64_20G_alibase_20211130.vhd
+      Password:
+        Ref: InstancePassword
+      InstanceType:
+        Ref: EcsInstanceType
+      SystemDiskCategory: cloud_essd
+      SystemDiskSize: 200
+      InternetMaxBandwidthOut: 5
+      IoOptimized: optimized
+      MaxAmount: 1
+  WaitCondition:
+    Type: ALIYUN::ROS::WaitCondition
+    Properties:
+      Count: 1
+      Handle:
+        Ref: WaitConditionHandle
+      Timeout: {{ CommandTimeout }}
+  WaitConditionHandle:
+    Type: ALIYUN::ROS::WaitConditionHandle
+  InstallPackage:
+    Type: ALIYUN::ECS::RunCommand
+    Properties:
+      InstanceIds:
+        Fn::GetAtt:
+          - InstanceGroup
+          - InstanceIds
+      Type: RunShellScript
+      Sync: true
+      Timeout: {{ CommandTimeout }}
+      CommandContent:
+        Fn::Sub:
+          - |
+            {{ Command | indent(width=12)}}
+            # 执行成功回调WaitCondition结束waitCondition的等待
+            ${CurlCli} -d "{\"Data\" : \"Success\", \"status\" : \"SUCCESS\"}"
+          - CurlCli:
+              Fn::GetAtt:
+                - WaitConditionHandle
+                - CurlCli
 ```
 
-### 使用Demo
+## 服务配置
 
-`(服务使用说明内容)`
+[创建代运维服务完成实例运维](https://help.aliyun.com/zh/compute-nest/create-a-hosted-operations-and-maintenance-service?spm=a2c4g.11186623.0.i24#task-2167552])
 
-```
-eg:
+[创建包含变配功能的服务](https://help.aliyun.com/zh/compute-nest/use-cases/create-a-service-that-supports-specification-changes-and-change-the-specifications-of-a-service-instance?spm=a2c4g.11186623.0.i3])
 
-请访问Demo官网了解如何使用：[使用文档](https://www.aliyun.com)
-```
+[创建包含服务升级功能的服务](https://help.aliyun.com/zh/compute-nest/upgrade-a-service-instance?spm=a2c4g.11186623.0.i17#task-2236803)
 
-## 问题排查
+## 服务交付
 
-`(服务使用说明内容)`
+[自定义服务架构图](https://help.aliyun.com/zh/compute-nest/customize-a-service-architecture?spm=a2c4g.11186623.0.0.56e736bfyUdlFm])
 
-```
-eg:
+[服务文档上线流程](https://help.aliyun.com/zh/compute-nest/use-cases/publish-documents-to-compute-nest?spm=a2c4g.313309.0.i0])
 
-请访问[Demo的问题排查链接](https://www.aliyun.com)获取帮助。
-```
+[将服务上架云市场并上到云市场售卖](https://help.aliyun.com/zh/compute-nest/publish-a-service-to-alibaba-cloud-marketplace?spm=a2c4g.11186623.0.i7])
 
-## 联系我们
+## 其他说明
 
-欢迎访问Demo官网（[https://www.aliyun.com](https://www.aliyun.com)）了解更多信息。
+[实例代码源地址](https://atomgit.com/flow-example/spring-boot)
 
-联系邮箱：[https://www.aliyun.com](mailto:https://www.aliyun.com)
-
-社区版开源地址：[https://github.com/](https://github.com/)
-
-扫码关注微信公众号，技术博客、活动通知不容错过：
-
-`(添加二维码图片)`
+[软件包package.tgz构建流程参考](https://help.aliyun.com/document_detail/153848.html)
