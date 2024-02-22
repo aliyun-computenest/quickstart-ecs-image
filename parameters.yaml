@@ -7,7 +7,7 @@ Parameters:
       zh-cn: 自定义服务参数
     Description:
       en: Customized service parameters, can be referenced in command content。</br>Name is english name of parameter, cannot contain space or special characters</br>Label is parameter name user will see</br>Type is parameter type</br>AllowedValues are allowed parameter values, empty for no limit</br>NoEcho is option for hidding parameter value, such as password</br>AssociationProperty please refer to <a href='https://www.alibabacloud.com/help/en/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>document</a>
-      zh-cn: 自定义的服务参数，可以在命令中引用参数。</br>Name为入参的英文名，不允许有空格和特殊字符</br>Label是用户看到的中文参数名</br>Type是参数的类型</br>AllowedValues是参数的可选值，不填则无限制</br>NoEcho开启时对用户隐藏已输入的值，一般用户密码类的敏感入参</br>AssociationProperty的含义请参考<a href='https://www.alibabacloud.com/help/zh/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>官网文档</a>
+      zh-cn: 自定义的服务参数，可以在命令中引用参数。</br>AssociationProperty的含义请参考<a href='https://www.alibabacloud.com/help/zh/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>官网文档</a>
     Type: Json
     AssociationProperty: List[Parameters]
     AssociationPropertyMetadata:
@@ -15,12 +15,12 @@ Parameters:
         Name:
           Label:
             en: English Parameter Name
-            zh-cn: 参数英文名
+            zh-cn: 英文参数名
           Type: String
         Label:
           Label:
             en: The parameter label for user
-            zh-cn: 用户的参数标题
+            zh-cn: 用户见到的参数名
           Type: String
         Type:
           Label:
@@ -45,7 +45,7 @@ Parameters:
         NoEcho:
           Label:
             en: No Echo
-            zh-cn: 输入参数值不回显
+            zh-cn: 隐藏输入的参数值（敏感参数）
           Type: Boolean
           Default: false
           AllowedValues:
@@ -152,8 +152,7 @@ Parameters:
       zh-cn: 服务输出
     Description:
       en: Service outputs
-      zh-cn: 服务输出。可以引用参数或Address，Address代表ECS实例的公网IP</br>
-      zh-cn: 自定义的服务参数，可以在命令中引用参数。</br>Name为入参的英文名，不允许有空格和特殊字符</br>Label是用户看到的中文参数名</br>Type是参数的类型</br>AllowedValues是参数的可选值，不填则无限制</br>NoEcho开启时对用户隐藏已输入的值，一般用户密码类的敏感入参</br>AssociationProperty的含义请参考<a href='https://www.alibabacloud.com/help/zh/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>官网文档</a>
+      zh-cn: 服务输出。输出值表达式中可以引用参数或Address，Address代表ECS实例的公网IP
     Type: Json
     AssociationProperty: List[Parameters]
     AssociationPropertyMetadata:
