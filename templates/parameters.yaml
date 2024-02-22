@@ -9,6 +9,9 @@ Parameters:
 CommandTimeout: 300
 Command: |
     #!/bin/bash
+    # 此命令将在ECS实例中以root身份执行
+    # 可以在此命令中进行环境的初始化和软件的初始化
+    # 可以在命令内容中引用参数。比如可以根据用户的入参值对软件进行配置
     echo ${AdminPassword}
 InstanceTypes:
   - ecs.c6.large
