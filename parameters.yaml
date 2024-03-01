@@ -7,7 +7,7 @@ Parameters:
       zh-cn: 自定义服务参数
     Description:
       en: Customized service parameters, can be referenced in command content。</br>Name is english name of parameter, cannot contain space or special characters</br>Label is parameter name user will see</br>Type is parameter type</br>AllowedValues are allowed parameter values, empty for no limit</br>NoEcho is option for hidding parameter value, such as password</br>AssociationProperty please refer to <a href='https://www.alibabacloud.com/help/en/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>document</a>
-      zh-cn: 自定义的服务参数，可以在命令中引用参数。</br>AssociationProperty的含义请参考<a href='https://www.alibabacloud.com/help/zh/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>官网文档</a>
+      zh-cn: 自定义的服务参数，以${Parameter}的形式引用参数。</br>AssociationProperty的含义请参考<a href='https://www.alibabacloud.com/help/zh/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>官网文档</a>
     Type: Json
     AssociationProperty: List[Parameters]
     AssociationPropertyMetadata:
