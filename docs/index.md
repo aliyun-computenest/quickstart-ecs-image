@@ -40,6 +40,7 @@
 | AliyunComputeNestUserFullAccess | 管理计算巢服务（ComputeNest）的用户侧权限 |
 | AliyunComputeNestSupplierFullAccess | 管理计算巢服务（ComputeNest）的服务商侧权限 ｜
 
+
 ### 自定义服务配置
 本服务模板支持服务商自定义服务配置。在通用场景的基础上对软件的参数和服务的输出进行配置。 
 在服务创建完成后，服务商可以进行编辑定制。
