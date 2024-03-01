@@ -176,7 +176,7 @@ Metadata:
     ParameterGroups:
       - Parameters:
           - AllowedRegions
-          - Label: Ecs镜像部署物
+          - Label: ECS镜像部署物
             Items:
               - EcsImageArtifactId
               - EcsImageArtifactVersion
