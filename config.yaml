@@ -1,5 +1,5 @@
 Service:
-  RegionId: cn-hangzhou
+  RegionId: ap-southeast-1
   DeployType: ros
   DeployMetadata:
     SupplierDeployMetadata:
@@ -11,8 +11,7 @@ Service:
       - Name: ECS单机版
         Url: 'templates/template.yaml'
         AllowedRegions:
-          - cn-hangzhou
-        
+          - ap-southeast-1
   ServiceType: private
   ServiceInfo:
     Locale: zh-CN
