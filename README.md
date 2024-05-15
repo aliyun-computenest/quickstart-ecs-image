@@ -1,18 +1,20 @@
-# QuickStart Demo
+# 代码仓库结构
 
-查看服务实例部署在线文档，请访问 [服务实例部署文档](https://aliyun-computenest.github.io/quickstart-demo)
-
-本文档通过 [MkDocs](https://github.com/mkdocs/mkdocs) 生成，请参考[使用文档](https://www.mkdocs.org/getting-started/#installation) 
-
-1）安装和使用：
-
-```shell
-$ pip install mkdocs # or use pip3 安装文档工具
-$ pip install --upgrade mkdocs-aliyun-computenest # or use pip3 安装计算巢主题
-$ mkdocs serve # in root folder
+文档目录说明：
 ```
-2）本地预览：本地在浏览器打开 [http://localhost:8000/](http://localhost:8000/) 。
-
-3）本地新建分支后，提交 `Pull request` 到 `main`分支。
-
-4）合并至 `main` 分支后，查看 pages 部署结果。
+├── README.md                   - 服务说明和服务构建说明
+├── docs                        - 服务文档相关文件
+│   └── index.md
+├── resources                   - 服务资源文件
+│   ├── icons
+│   │   └── logo.png            - 服务logo
+├── ros_templates               - 服务ROS模板，可以有多个
+│   └── template.yaml           - 示例ROS模板
+├── config.yaml                 - 服务配置文件
+└── code_generation             - 代码生成相关，包括jinja2模板、jinja2变量值文件、jinja2变量定义文件
+    ├── ros_templates           - 用来生成ROS模板的jinja2模板，可以有多个
+    │   └── template.yaml.j2    - 用于生成ecs部署架构的模板
+    ├── config.yaml.j2          - 用来生成config.yaml的jinja2模板
+    ├── variables.yaml          - 保存jinja2模板变量值的文件
+    └── variable_meta.yaml      - 定义variable格式的文件，用来在控制台渲染变量输入表单
+```

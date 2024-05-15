@@ -9,7 +9,7 @@ Service:
           ArtifactVersion: {{ EcsImageArtifactVersion }}
     TemplateConfigs:
       - Name: ECS单机版
-        Url: 'templates/template.yaml'
+        Url: 'ros_templates/template.yaml'
         {%- if AllowedRegions %}
         AllowedRegions:{% for AllowedRegion in AllowedRegions %}
           - {{ AllowedRegion }}
@@ -19,7 +19,7 @@ Service:
   ServiceInfo:
     Locale: zh-CN
     ShortDescription: ecs image deploy
-    Image: 'icons/service_logo.png'
+    Image: 'resources/icons/service_logo.png'
     Name: ECS镜像部署单机版
   ShareType: Public
   ApprovalType: Manual
