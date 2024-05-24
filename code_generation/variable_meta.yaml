@@ -28,7 +28,7 @@ Parameters:
             zh-cn: 类型
           Type: String
           AllowedValues:
-            - Integer
+            - Number
             - String
             - Boolean
             - Json
