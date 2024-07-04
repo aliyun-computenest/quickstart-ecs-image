@@ -1,0 +1,199 @@
+ROSTemplateFormatVersion: '2015-09-01'
+# 定义参数
+Parameters:
+  Parameters:
+    Label:
+      en: Customized service parameters
+      zh-cn: 自定义服务参数
+    Description:
+      en: Customized service parameters, can be referenced in command content。</br>Name is english name of parameter, cannot contain space or special characters</br>Label is parameter name user will see</br>Type is parameter type</br>AllowedValues are allowed parameter values, empty for no limit</br>NoEcho is option for hidding parameter value, such as password</br>AssociationProperty please refer to <a href='https://www.alibabacloud.com/help/en/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>document</a>
+      zh-cn: 自定义的服务参数，以${Parameter}的形式引用参数。</br>AssociationProperty的含义请参考<a href='https://www.alibabacloud.com/help/zh/ros/user-guide/associationproperty-and-associationpropertymetadata' target='_blank'>官网文档</a>
+    Type: Json
+    AssociationProperty: List[Parameters]
+    AssociationPropertyMetadata:
+      Parameters:
+        Name:
+          Label:
+            en: English Parameter Name
+            zh-cn: 英文参数名
+          Type: String
+        Label:
+          Label:
+            en: The parameter label for user
+            zh-cn: 用户见到的参数名
+          Type: String
+        Type:
+          Label:
+            en: Parameter Type 
+            zh-cn: 类型
+          Type: String
+          AllowedValues:
+            - Number
+            - String
+            - Boolean
+            - Json
+        AllowedValues:
+          Label:
+            en: Allowed values
+            zh-cn: 可选值
+          Type: Json
+          AssociationProperty: List
+          AssociationPropertyMetadata:
+            Multiple: true
+          Default: Null
+          Required: false
+        NoEcho:
+          Label:
+            en: No Echo
+            zh-cn: 隐藏输入的参数值（敏感参数）
+          Type: Boolean
+          Default: false
+          AllowedValues:
+            - true
+            - false
+        AssociationProperty:
+          Type: String
+          Default: Null
+          Required: false
+          AssociationProperty: AssociationProperty
+    Default:
+    - Name: AdminPassword
+      NoEcho: true
+      Type: String
+      Label: 管理员密码
+      AssociationProperty: ALIYUN::ECS::Instance::Password
+  Command:
+    Label:
+      en: Initialization command
+      zh-cn: 初始化命令
+    Description:
+      en: Initialize your software in command
+      zh-cn: 在命令中对软件进行初始化
+    Type: String
+    AssociationProperty: Code
+    Default: |
+      #!/bin/bash
+      # 此命令将在ECS实例中以root身份执行
+      # 可以在此命令中进行环境的初始化和软件的初始化
+      # 可以在命令内容中引用参数。比如可以根据用户的入参值对软件进行配置
+      echo ${AdminPassword}
+  CommandTimeout:
+    Label:
+      en: Timeout of command in seconds
+      zh-cn: 命令超时时间（秒）
+    Description:
+      en: service instance fails to deploy when command timed out
+      zh-cn: 命令执行超时后服务实例部署会失败
+    Type: Number
+    Default: 300
+  AllowedRegions:
+    Type: Json
+    Label:
+      en: Deploy region list
+      zh-cn: 部署地域列表
+    Description:
+      en: Deploy region list, empty for all regions. Note artifact should be distributed to supported deploy regions
+      zh-cn: 用户可选的部署地域列表，不填代表支持全部地域。注意部署物必须分发到所有支持的部署地域
+    AssociationProperty: ALIYUN::ECS::RegionId
+    AssociationPropertyMetadata:
+      Multiple: true
+    Default: []
+  EcsImageArtifactId:
+    Type: String
+    Label:
+      en: ECS image artifact id
+      zh-cn: ECS镜像部署物Id
+    AssociationProperty: ALIYUN::ComputeNest::Artifact::ArtifactId
+    AssociationPropertyMetadata:
+      IsSupplier: true
+      ArtifactType: EcsImage
+  EcsImageArtifactVersion:
+    Type: String
+    Label:
+      en: ECS image artifact version
+      zh-cn: ECS镜像部署物版本
+    AssociationProperty: ALIYUN::ComputeNest::Artifact::ArtifactIdVersion
+    AssociationPropertyMetadata:
+      IsSupplier: true
+      ArtifactId: ${EcsImageArtifactId}
+  Ports:
+    Type: Json
+    Label:
+      en: security group ports
+      zh-cn: 安全组入方向开放端口
+    Description:
+      en: access service from public IP and ports
+      zh-cn: 可以通过公网IP和端口访问服务
+    AssociationProperty: List
+    AssociationPropertyMetadata:
+      Multiple: true
+    Default:
+      - 8080
+    Required: true
+    MinLength: 1
+  InstanceTypes:
+    Type: Json
+    Label:
+      en: ECS instance types
+      zh-cn: ECS实例规格列表
+    Description:
+      en: ECS instance types that user can choose
+      zh-cn: 用户可选的ECS实例规格范围
+    AssociationProperty: ALIYUN::ECS::Instance::InstanceType
+    AssociationPropertyMetadata:
+      Multiple: true
+    Default:
+      - ecs.c6.large
+      - ecs.c6.xlarge
+      - ecs.c6.2xlarge
+  Outputs:
+    Label:
+      en: Service outputs
+      zh-cn: 服务输出
+    Description:
+      en: Service outputs
+      zh-cn: 服务输出。输出值表达式中可以引用参数或Address，Address代表ECS实例的公网IP
+    Type: Json
+    AssociationProperty: List[Parameters]
+    AssociationPropertyMetadata:
+      Parameters:
+        DisplayName:
+          Label:
+            en: Output name
+            zh-cn: 输出名称
+          Type: String
+        Expression:
+          Label:
+            en: Expression for output value
+            zh-cn: 输出值表达式
+          Type: String
+    Default:
+    - DisplayName: Endpoint
+      Expression: http://${Address}:8080
+Metadata:
+  ALIYUN::ROS::Interface:
+    # 定义资源分组，创建服务实例时，同一分组的参数分布在一起
+    ParameterGroups:
+      - Parameters:
+          - AllowedRegions
+          - Label: ECS镜像部署物
+            Items:
+              - EcsImageArtifactId
+              - EcsImageArtifactVersion
+          - Parameters
+          - Command
+          - CommandTimeout
+        Label:
+          en: Deployment Configuration
+          zh-cn: 软件配置
+      - Parameters:
+          - InstanceTypes
+          - Ports
+        Label:
+          en: Security Configuration
+          zh-cn: 实例配置
+      - Parameters:
+          - Outputs
+        Label:
+          en: Deployment Configuration
+          zh-cn: 输出配置

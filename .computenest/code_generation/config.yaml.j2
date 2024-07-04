@@ -1,0 +1,25 @@
+Service:
+  RegionId: cn-hangzhou
+  DeployType: ros
+  DeployMetadata:
+    SupplierDeployMetadata:
+      ArtifactRelation:
+        'centos_7_8_x64_20G_alibase_20211130.vhd':
+          ArtifactId: {{ EcsImageArtifactId }}
+          ArtifactVersion: {{ EcsImageArtifactVersion }}
+    TemplateConfigs:
+      - Name: ECS单机版
+        Url: 'ros_templates/template.yaml'
+        {%- if AllowedRegions %}
+        AllowedRegions:{% for AllowedRegion in AllowedRegions %}
+          - {{ AllowedRegion }}
+          {%- endfor %}
+        {% endif %}
+  ServiceType: private
+  ServiceInfo:
+    Locale: zh-CN
+    ShortDescription: ecs image deploy
+    Image: 'resources/icons/service_logo.png'
+    Name: ECS镜像部署单机版
+  ShareType: Public
+  ApprovalType: Manual
