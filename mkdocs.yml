@@ -1,0 +1,4 @@
+site_name: Aliyun 计算巢 x quick-ecs-image
+theme: 
+  name: aliyuncomputenest
+docs_dir: .computenest/docs
