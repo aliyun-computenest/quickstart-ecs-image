@@ -5,8 +5,8 @@ Service:
     SupplierDeployMetadata:
       ArtifactRelation:
         'centos_7_8_x64_20G_alibase_20211130.vhd':
-          ArtifactId: ${Artifact.EcsImageDeployment.ArtifactId}
-          ArtifactVersion: ${Artifact.EcsImageDeployment.ArtifactVersion}
+          ArtifactId: {{ EcsImageArtifactId }}
+          ArtifactVersion: {{ EcsImageArtifactVersion }}
     TemplateConfigs:
       - Name: ECS单机版
         Url: 'ros_templates/template.yaml'
@@ -23,15 +23,3 @@ Service:
     Name: ECS镜像部署单机版
   ShareType: Public
   ApprovalType: Manual
-Artifact:
-    EcsOneBox:
-        ArtifactType: EcsImage
-        ArtifactName: ECS镜像部署单机版
-        Description: ECS镜像部署单机版
-        ArtifactProperty:
-          RegionId: {{ RegionId }}
-          ImageId: {{ ImageId }}
-          CommodityCode: {{ CommodityCode }}
-          CommodityVersion: {{ CommodityVersion }}
-        SupportRegionIds:
-            - cn-hangzhou
