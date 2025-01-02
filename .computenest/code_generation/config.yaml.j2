@@ -28,9 +28,9 @@ Artifact:
         ArtifactType: EcsImage
         ArtifactName: ECS镜像部署单机版
         Description: ECS镜像部署单机版
-        {%- if RegionId and SelfImageID %}
+        {%- if SelfRegionId and SelfImageID %}
         ArtifactProperty:
-          RegionId: {{ RegionId }}
+          RegionId: {{ SelfRegionId }}
           ImageId: {{ SelfImageID }}
         {%- endif %}
         {%- if CommodityCode and CommodityVersion %}
