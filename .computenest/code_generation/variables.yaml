@@ -9,7 +9,7 @@ Parameters:
     Label: 管理员密码
     AssociationProperty: ALIYUN::ECS::Instance::Password
 CommandTimeout: 300
-Command: |
+CommandContent: |
     #!/bin/bash
     # 此命令将在ECS实例中以root身份执行
     # 可以在此命令中进行环境的初始化和软件的初始化
@@ -21,6 +21,7 @@ InstanceTypes:
   - ecs.c6.2xlarge
 Ports:
   - 8080
+SourceImageId: centos_7_8_x64_20G_alibase_20211130.vhd
 Outputs:
   - Label: Endpoint
     Expression: https://${Address}:8080

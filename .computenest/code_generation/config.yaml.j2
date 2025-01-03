@@ -14,7 +14,7 @@ Service:
         AllowedRegions:{% for AllowedRegion in AllowedRegions %}
           - {{ AllowedRegion }}
           {%- endfor %}
-        {% endif %}
+        {%- endif %}
   ServiceType: private
   ServiceInfo:
     Locale: zh-CN
@@ -24,29 +24,30 @@ Service:
   ShareType: Public
   ApprovalType: Manual
 Artifact:
-    EcsImageDeployment:
-        ArtifactType: EcsImage
-        ArtifactName: ECS镜像部署单机版
-        Description: ECS镜像部署单机版
-        {%- if SelfRegionId and SelfImageID %}
-        ArtifactProperty:
-          RegionId: {{ SelfRegionId }}
-          ImageId: {{ SelfImageID }}
-        {%- endif %}
-        {%- if CommodityCode and CommodityVersion %}
-        ArtifactProperty:
-          CommodityCode: {{ CommodityCode }}
-          CommodityVersion: {{ CommodityVersion }}
-        {%- endif %}
-        {%- if SourceImageId and CommandContent %}
-        ArtifactBuildProperty:
-          RegionId: ap-southeast-1
-          SourceImageId: {{ SourceImageId }}
-          CommandContent: {{ CommandContent }}
-          CommandType: {{ CommandType }}
-        {%- endif %}
-        {%- if AllowedRegions %}
-        SupportRegionIds:{% for AllowedRegion in AllowedRegions %}
-          - {{ AllowedRegion }}
-          {%- endfor %}
-        {% endif %}
+  EcsImageDeployment:
+    ArtifactType: EcsImage
+    ArtifactName: ECS镜像部署单机版
+    Description: ECS镜像部署单机版
+    {%- if SelfRegionId and SelfImageID %}
+    ArtifactProperty:
+      RegionId: {{ SelfRegionId }}
+      ImageId: {{ SelfImageID }}
+    {%- endif %}
+    {%- if CommodityCode and CommodityVersion %}
+    ArtifactProperty:
+      CommodityCode: {{ CommodityCode }}
+      CommodityVersion: {{ CommodityVersion }}
+    {%- endif %}
+    {%- if SourceImageId and CommandContent %}
+    ArtifactBuildProperty:
+      RegionId: ap-southeast-1
+      SourceImageId: {{ SourceImageId }}
+      CommandContent: |-
+        {{ CommandContent | indent(width=8, strip=True) }};
+      CommandType: {{ CommandType }}
+    {%- endif %}
+    {%- if AllowedRegions %}
+    SupportRegionIds:{% for AllowedRegion in AllowedRegions %}
+      - {{ AllowedRegion }}
+      {%- endfor %}
+    {% endif %}
